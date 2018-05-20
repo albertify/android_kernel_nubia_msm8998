@@ -942,7 +942,7 @@ static int pa224_check_intr(struct i2c_client *client)
 			data->ps_thrd_high = PA24_PS_OFFSET_MAX;
 			data->ps_thrd_low = PA24_PS_OFFSET_MAX - 1;
 		}
-		//msleep(saturation_delay);
+		msleep(saturation_delay);
 		SENSOR_LOG_INFO("Sun light!!, ht=%d, lt=%d, far_ps_min=%d\n", data->ps_thrd_high, data->ps_thrd_low, far_ps_min);
 		data->ps_status = PA24_PS_FAR_DISTANCE;
 		goto check_intr_exit;
@@ -979,7 +979,7 @@ static int pa224_check_intr(struct i2c_client *client)
 				pa224_report_event(data);
 			}
 		}
-		//msleep(sequence_dealy);
+		msleep(sequence_dealy);
 	}
 	//NEAR
 	else if (psdata > data->ps_thrd_high)
@@ -989,7 +989,7 @@ static int pa224_check_intr(struct i2c_client *client)
 			res = i2c_read_reg(client, REG_PS_DATA, ps_seq_near+i);
 			if (i > 0)
 				slope[i-1] = (int)(ps_seq_near[i] - ps_seq_near[i-1]);
-			//mdelay(5);
+			mdelay(5);
 		}
 
 		//pa224_get_ps_slope_array(ps_seq_near, slope, psdata, ps_ary_size);
@@ -1056,7 +1056,7 @@ static int pa224_check_intr(struct i2c_client *client)
 				}
 				pa224_report_event(data);
 			}
-			//msleep(sequence_dealy);
+			msleep(sequence_dealy);
 		} else {
 			i2c_write_reg(client,REG_CFG1,
 					(PA24_LED_CURR << 4)| (PA24_PS_PRST << 2) );
